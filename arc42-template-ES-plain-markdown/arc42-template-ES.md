@@ -1,5 +1,5 @@
 ---
-date: Enero 2023
+date: Febrero 2026
 title: Arquitectura Sistema ERP – Módulo de Compras
 ---
 
