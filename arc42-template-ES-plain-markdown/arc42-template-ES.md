@@ -1,220 +1,214 @@
 ---
 date: Enero 2023
-title: Plantilla ![arc42](images/arc42-logo.png)
+title: Arquitectura Sistema ERP – Módulo de Compras
 ---
 
-# 
+# Sistema ERP – Módulo de Compras
 
-**Acerca de arc42**
+## Introducción y Metas
 
-arc42, La plantilla de documentación para arquitectura de sistemas y de
-software.
+### Vista de Requerimientos
 
-Por Dr. Gernot Starke, Dr. Peter Hruschka y otros contribuyentes.
+El sistema ERP tiene como objetivo gestionar el proceso de compras de una organización, permitiendo administrar productos, proveedores y órdenes de compra de forma estructurada y eficiente.
 
-Revisión de la plantilla: 7.0 ES (basada en asciidoc), Enero 2017
+El Módulo de Compras debe permitir:
 
-© Reconocemos que este documento utiliza material de la plantilla de
-arquitectura arc42, <https://www.arc42.org>. Creada por Dr. Peter
-Hruschka y Dr. Gernot Starke.
+- Registrar productos
+- Registrar proveedores
+- Crear órdenes de compra
+- Consultar historial de compras
+- Validar disponibilidad de productos
+- Gestionar estados de órdenes (pendiente, aprobada, cancelada)
 
-# Introducción y Metas {#section-introduction-and-goals}
+### Metas de Calidad
 
-## Vista de Requerimientos {#_vista_de_requerimientos}
+- Seguridad en el acceso a la información
+- Alta disponibilidad del sistema
+- Escalabilidad
+- Mantenibilidad
+- Rendimiento adecuado en consultas
 
-## Metas de Calidad {#_metas_de_calidad}
+### Partes interesadas (Stakeholders)
 
-## Partes interesadas (Stakeholders) {#_partes_interesadas_stakeholders}
+| Rol | Expectativa |
+|------|------------|
+| Administrador | Control total del sistema |
+| Usuario de Compras | Registrar y gestionar órdenes |
+| Gerencia | Consultar reportes y estados |
 
-+-------------+---------------------------+---------------------------+
-| Rol/Nombre  | Contacto                  | Expectativas              |
-+=============+===========================+===========================+
-| *           | *\<Contact-1\>*           | *\<Expectation-1\>*       |
-| \<Role-1\>* |                           |                           |
-+-------------+---------------------------+---------------------------+
-| *           | *\<Contact-2\>*           | *\<Expectation-2\>*       |
-| \<Role-2\>* |                           |                           |
-+-------------+---------------------------+---------------------------+
+---
 
-# Restricciones de la Arquitectura {#section-architecture-constraints}
+# Restricciones de la Arquitectura
 
-# Alcance y Contexto del Sistema {#section-context-and-scope}
+- Backend desarrollado en **Java con Spring Boot**
+- Base de datos **PostgreSQL**
+- Frontend como **SPA con React**
+- Arquitectura basada en contenedores
+- Uso de API REST para comunicación
 
-## Contexto de Negocio {#_contexto_de_negocio}
+---
 
-**\<Diagrama o Tabla\>**
+# Alcance y Contexto del Sistema
 
-**\<optionally: Explanation of external domain interfaces\>**
+## Contexto de Negocio
 
-## Contexto Técnico {#_contexto_técnico}
+El sistema interactúa con:
 
-**\<Diagrama o Tabla\>**
+- Usuarios internos
+- Sistema de inventario
+- Proveedores externos
 
-**\<Opcional: Explicación de las interfases técnicas\>**
+### Diagrama de Contexto (C1)
 
-**\<Mapeo de Entrada/Salida a canales\>**
+![Diagrama de Contexto](images/DIAGRAMA_CONTEXTO_C1.png)
 
-# Estrategia de solución {#section-solution-strategy}
+---
 
-# Vista de Bloques {#section-building-block-view}
+## Contexto Técnico
 
-## Sistema General de Caja Blanca {#_sistema_general_de_caja_blanca}
+El sistema está compuesto por:
 
-***\<Diagrama general\>***
+- Aplicación Web (Frontend)
+- API REST (Backend)
+- Base de Datos PostgreSQL
 
-Motivación
+---
 
-:   *\<Explicación en texto\>*
+# Estrategia de Solución
 
-Bloques de construcción contenidos
+Se adopta una arquitectura en capas:
 
-:   *\<Desripción de los bloques de construcción contenidos (Cajas
-    negras)\>*
+- Capa de Presentación (React)
+- Capa de Negocio (Spring Boot)
+- Capa de Persistencia (PostgreSQL)
 
-Interfases importantes
+Se utiliza una API REST para comunicación entre frontend y backend.
 
-:   *\<Descripción de las interfases importantes\>*
+---
 
-### \<Caja Negra 1\> {#_caja_negra_1}
+# Vista de Bloques
 
-*\<Propósito/Responsabilidad\>*
+## Sistema General
 
-*\<Interfase(s)\>*
+El sistema está compuesto por tres contenedores principales:
 
-*\<(Opcional) Características de Calidad/Performance\>*
+- Frontend (React SPA)
+- Backend (Spring Boot API)
+- Base de Datos (PostgreSQL)
 
-*\<(Opcional) Ubicación Archivo/Directorio\>*
+### Diagrama de Contenedores (C2)
 
-*\<(Opcional) Requerimientos Satisfechos\>*
+![Diagrama de Contenedores](images/DIAGRAMA_CONTENEDORES_C2.png)
 
-*\<(Opcional) Riesgos/Problemas/Incidentes Abiertos\>*
+### Responsabilidad de cada contenedor
 
-### \<Caja Negra 2\> {#_caja_negra_2}
+**Frontend**
+- Interfaz de usuario
+- Formularios de registro
+- Visualización de datos
 
-*\<plantilla de caja negra\>*
+**Backend**
+- Lógica de negocio
+- Validaciones
+- Gestión de órdenes y proveedores
+- Exposición de API REST
 
-### \<Caja Negra N\> {#_caja_negra_n}
+**Base de Datos**
+- Almacenamiento persistente
+- Gestión de entidades del dominio
 
-*\<Plantilla de caja negra\>*
+---
 
-### \<Interfase 1\> {#_interfase_1}
+# Vista de Ejecución
 
-...​
+## Escenario: Registrar Producto
 
-### \<Interfase m\> {#_interfase_m}
+Flujo:
 
-## Nivel 2 {#_nivel_2}
+1. Usuario ingresa datos del producto en el frontend.
+2. Frontend envía solicitud POST al backend.
+3. Backend valida datos.
+4. Backend guarda información en PostgreSQL.
+5. Backend responde con confirmación.
+6. Frontend muestra mensaje de éxito.
 
-### Caja Blanca *\<bloque de construcción 1\>* {#_caja_blanca_bloque_de_construcción_1}
+### Diagrama de Secuencia
 
-*\<plantilla de caja blanca\>*
+![Diagrama de Secuencia](images/DIAGRAMA_SECUENCIA.png)
 
-### Caja Blanca *\<bloque de construcción 2\>* {#_caja_blanca_bloque_de_construcción_2}
+---
 
-*\<plantilla de caja blanca\>*
+# Vista de Despliegue
 
-...​
+El sistema puede desplegarse en:
 
-### Caja Blanca *\<bloque de construcción m\>* {#_caja_blanca_bloque_de_construcción_m}
+- Servidor Linux
+- Docker para contenerización
+- Base de datos en servidor dedicado o servicio cloud
 
-*\<plantilla de caja blanca\>*
+Arquitectura sugerida:
 
-## Nivel 3 {#_nivel_3}
+- Contenedor 1: Frontend
+- Contenedor 2: Backend
+- Contenedor 3: PostgreSQL
 
-### Caja Blanca \<\_bloque de construcción x.1\_\> {#_caja_blanca_bloque_de_construcción_x_1}
+---
 
-*\<plantilla de caja blanca\>*
+# Modelo de Datos
 
-### Caja Blanca \<\_bloque de construcción x.2\_\> {#_caja_blanca_bloque_de_construcción_x_2}
+### Diagrama Entidad-Relación (MER)
 
-*\<plantilla de caja blanca\>*
+![Diagrama MER](images/DIAGRAMA_MER.png)
 
-### Caja Blanca \<\_bloque de construcción y.1\_\> {#_caja_blanca_bloque_de_construcción_y_1}
+Entidades principales:
 
-*\<plantilla de caja blanca\>*
+- Producto
+- Proveedor
+- OrdenCompra
+- DetalleOrden
 
-# Vista de Ejecución {#section-runtime-view}
+---
 
-## \<Escenario de ejecución 1\> {#_escenario_de_ejecución_1}
+# Conceptos Transversales
 
--   *\<Inserte un diagrama de ejecución o la descripción del
-    escenario\>*
+- Seguridad mediante autenticación
+- Manejo de errores centralizado
+- Validaciones de datos en backend
+- Control de acceso por roles
 
--   *\<Inserte la descripción de aspectos notables de las interacciones
-    entre los bloques de construcción mostrados en este diagrama.\>*
+---
 
-## \<Escenario de ejecución 2\> {#_escenario_de_ejecución_2}
+# Decisiones de Diseño
 
-## ...​
+- Uso de arquitectura en capas
+- API REST para desacoplamiento
+- Base de datos relacional
+- Separación clara entre frontend y backend
 
-## \<Escenario de ejecución n\> {#_escenario_de_ejecución_n}
+---
 
-# Vista de Despliegue {#section-deployment-view}
+# Requerimientos de Calidad
 
-## Nivel de infraestructura 1 {#_nivel_de_infraestructura_1}
+- Tiempo de respuesta menor a 2 segundos
+- Integridad de datos
+- Disponibilidad 99%
+- Escalabilidad horizontal mediante contenedores
 
-***\<Diagrama General\>***
+---
 
-Motivación
+# Riesgos y deuda técnica
 
-:   *\<Explicación en forma textual\>*
+- Dependencia de la base de datos
+- Posible sobrecarga si no se optimizan consultas
+- Necesidad futura de balanceador de carga
 
-Características de Calidad/Rendimiento
+---
 
-:   *\<Explicación en forma textual\>*
+# Glosario
 
-    Mapeo de los Bloques de Construcción a Infraestructura
-
-    :   *\<Descripción del mapeo\>*
-
-## Nivel de Infraestructura 2 {#_nivel_de_infraestructura_2}
-
-### *\<Elemento de Infraestructura 1\>* {#_elemento_de_infraestructura_1}
-
-*\<diagrama + explicación\>*
-
-### *\<Elemento de Infraestructura 2\>* {#_elemento_de_infraestructura_2}
-
-*\<diagrama + explicación\>*
-
-...​
-
-### *\<Elemento de Infraestructura n\>* {#_elemento_de_infraestructura_n}
-
-*\<diagrama + explicación\>*
-
-# Conceptos Transversales (Cross-cutting) {#section-concepts}
-
-## *\<Concepto 1\>* {#_concepto_1}
-
-*\<explicación\>*
-
-## *\<Concepto 2\>* {#_concepto_2}
-
-*\<explicación\>*
-
-...​
-
-## *\<Concepto n\>* {#_concepto_n}
-
-*\<explicación\>*
-
-# Decisiones de Diseño {#section-design-decisions}
-
-# Requerimientos de Calidad {#section-quality-scenarios}
-
-## Árbol de Calidad {#_árbol_de_calidad}
-
-## Escenarios de calidad {#_escenarios_de_calidad}
-
-# Riesgos y deuda técnica {#section-technical-risks}
-
-# Glosario {#section-glossary}
-
-+----------------------+-----------------------------------------------+
-| Término              | Definición                                    |
-+======================+===============================================+
-| *\<Término-1\>*      | *\<definicion-1\>*                            |
-+----------------------+-----------------------------------------------+
-| *\<Término-2\>*      | *\<definicion-2\>*                            |
-+----------------------+-----------------------------------------------+
+| Término | Definición |
+|----------|------------|
+| Producto | Bien adquirido por la empresa |
+| Proveedor | Entidad que suministra productos |
+| Orden de Compra | Documento que formaliza la compra |
+| API REST | Interfaz de comunicación entre sistemas |
