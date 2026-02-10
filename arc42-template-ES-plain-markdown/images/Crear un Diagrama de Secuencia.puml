@@ -1,0 +1,27 @@
+@startuml
+
+actor "Administrador" as admin
+participant "SPA" as spa
+participant "API Backend" as api
+database "Base de Datos" as db
+
+admin -> spa : Completa formulario de producto
+activate spa
+
+spa -> api : POST /api/productos
+activate api
+
+api -> api : Validar datos
+
+api -> db : INSERT INTO productos
+activate db
+db --> api : Producto creado con ID
+deactivate db
+
+api --> spa : 201 Created (producto)
+deactivate api
+
+spa --> admin : Mostrar mensaje de éxito
+deactivate spa
+
+@enduml
